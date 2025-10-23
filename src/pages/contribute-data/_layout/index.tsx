@@ -35,7 +35,7 @@ function Register() {
         <Stack spacing={4}>
           {/* CUSTOMIZE: the registration page title */}
           <Typography variant="h6" component="h1">
-            Register as a data contributor
+            Get started as a contributor
           </Typography>
           <Box>
             <Typography fontWeight="medium" mb={1}>
