@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { CheckboxList } from './CheckboxList';
+import { Collapsible } from './Collapsible';
 import { RangeSlider } from './RangeSlider';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useFilters } from './FilterContext';
@@ -260,43 +261,51 @@ export const FilterField: React.FC<FilterFieldProps> = ({
       }}
       {...rest}
     >
-      <Box display="inline-block">
-        <Stack
-          direction="row"
-          spacing={1}
-          onClick={() => handleCancelFilter()}
-          sx={{
-            cursor: isActive ? 'pointer' : 'default',
-            display: 'inline-flex',
-          }}
-        >
-          {tooltip && (
-            <Tooltip title={tooltip} placement="top" arrow>
+      <Collapsible
+        isOpen={true}
+        label={
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            onClick={(e) => {
+              if (isActive) {
+                e.stopPropagation();
+                handleCancelFilter();
+              }
+            }}
+          >
+            {tooltip && (
+              <Tooltip title={tooltip} placement="top" arrow>
+                <Typography
+                  fontWeight="bold"
+                  color={isActive ? 'primary' : 'auto'}
+                  sx={{
+                    textDecoration: 'underline',
+                    textDecorationStyle: 'dotted',
+                    textUnderlineOffset: '0.25rem',
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Tooltip>
+            )}
+            {!tooltip && (
               <Typography
                 fontWeight="bold"
-                color={isActive ? 'primary' : 'auto'}
-                sx={{
-                  textDecoration: 'underline',
-                  textDecorationStyle: 'dotted',
-                  textUnderlineOffset: '0.25rem',
-                }}
+                color={isActive ? 'primary' : 'default'}
               >
                 {label}
               </Typography>
-            </Tooltip>
-          )}
-          {!tooltip && (
-            <Typography
-              fontWeight="bold"
-              color={isActive ? 'primary' : 'default'}
-            >
-              {label}
-            </Typography>
-          )}
-          {isActive && <CancelOutlinedIcon color="primary" />}
-        </Stack>
-      </Box>
-      <Box>{getFilterComponent()}</Box>
+            )}
+            {isActive && (
+              <CancelOutlinedIcon color="primary" fontSize="small" />
+            )}
+          </Stack>
+        }
+      >
+        <Box>{getFilterComponent()}</Box>
+      </Collapsible>
     </Stack>
   );
 };

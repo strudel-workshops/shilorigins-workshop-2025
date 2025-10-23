@@ -88,9 +88,13 @@ export const filterByDataFilters = (
                 f.value[1]
               ) {
                 const dateValue = dayjs(d[f.field]);
+                const startDate = dayjs(f.value[0]);
+                const endDate = dayjs(f.value[1]);
                 if (
-                  dateValue.isAfter(f.value[0]) &&
-                  dateValue.isBefore(f.value[1])
+                  (dateValue.isAfter(startDate) ||
+                    dateValue.isSame(startDate, 'day')) &&
+                  (dateValue.isBefore(endDate) ||
+                    dateValue.isSame(endDate, 'day'))
                 ) {
                   match = true;
                 }
